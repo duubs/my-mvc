@@ -11,6 +11,6 @@ require 'lib/Controller.php'; // 引入文件
 
 $obj = new Controller; // 实例化类
 
-echo $obj->init(); // 初始化
+$obj->init(); // 初始化
 
  ?>
