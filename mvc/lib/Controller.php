@@ -29,6 +29,7 @@ class Controller
 	// 初始化控制器方法
 	public function controller_action($controller,$action)
 	{
+		// 首字母大写
 		$controller = ucfirst($controller.'Controller');
 		// 判断文件是否存在
 		$file_name = CONTROLLER_DIR.'/'.$controller.".php";
@@ -36,8 +37,6 @@ class Controller
 			exit('<h2>文件不存在</h2>');
 		}
 
-		require $file_name;//引入文件
-		
 		// 判断类是否存在
 		if (!class_exists($controller)) {
 			exit('<h2>类名与文件名不一致</h2>');
