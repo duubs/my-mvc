@@ -7,7 +7,7 @@ class Model
 {
 	
 	public $config; // 配置文件
-	public $table_name = 'aaa'; // 表名
+	public $table_name; // 表名
 	public $pdo; // pdo对象
 	public $where = ' WHERE 1=1 '; // where 条件
 	public static $table_fields; //表字段名
@@ -74,17 +74,18 @@ class Model
 
 	//获取当前表字段
 	public function field(){
-		// if (!empty(self::$table_fields[$this->table_name])) {
-		// 	return self::$table_fields[$this->table_name];
-		// }
-		$stmt = $this->pdo->prepare('DESC '.$this->table_name);
-		$stmt->execute();
+		if (!empty(self::$table_fields[$this->table_name])) {
+			return self::$table_fields[$this->table_name];
+		}
+	
+		$stmt = $this->pdo->query('desc '.$this->table_name);
 		return self::$table_fields[$this->table_name] = $stmt->fetchAll(PDO::FETCH_COLUMN);
 	}
 	
 	//过滤冗余字段
 	public function redun($data=[]){
 		$field = $this->field();
+		var_dump(self::$table_fields);exit;
 		foreach ($data as $k => $v) {
 			if (!in_array($k,$field)) {
 				unset($data[$k]);
