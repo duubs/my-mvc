@@ -2,6 +2,8 @@
 /**
 * 视图基层
 */
+namespace lib;
+
 class View extends Controller
 {
 

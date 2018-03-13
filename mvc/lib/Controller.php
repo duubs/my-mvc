@@ -2,8 +2,7 @@
 /**
 * 基类 加载 控制器
 */
-
-include ROOT_DIR.'/lib/Function.php'; // 引入 框架自定义函数与自动加载 文件
+namespace lib;
 
 class Controller
 {
@@ -31,17 +30,21 @@ class Controller
 	{
 		// 首字母大写
 		$controller = ucfirst($controller.'Controller');
+
 		// 判断文件是否存在
 		$file_name = CONTROLLER_DIR.'/'.$controller.".php";
+
 		if (!file_exists($file_name)) {
 			exit('<h2>文件不存在</h2>');
 		}
+
+		$controller = '\\controller\\'.$controller; // 因添加命名空间所以加载类是需要加上文件来源
 
 		// 判断类是否存在
 		if (!class_exists($controller)) {
 			exit('<h2>类名与文件名不一致</h2>');
 		}
-
+		
 		$class_obj = new $controller; // 实例化类
 		
 		// 判断方法是否存在
