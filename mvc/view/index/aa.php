@@ -1,1 +1,1 @@
-aaaaaaa=  =aaaaaaa
+aaaaaaa= <?=$a?><?=$c;?> =aaaaaaa

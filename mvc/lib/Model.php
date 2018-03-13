@@ -1,8 +1,10 @@
 <?php 
-
+namespace lib;
 /**
 * model 基类
 */
+
+
 class Model
 {
 	
@@ -15,7 +17,7 @@ class Model
 	function __construct()
 	{
 		$this->config = require CONFIG_DIR.'/config.php';// 引入配置文件
-		$this->pdo = new PDO('mysql:host='.$this->config['db']['host'].';dbname='.$this->config['db']['dbname'].';',$this->config['db']['username'],$this->config['db']['password']);	// 初始化一个PDO对象
+		$this->pdo = new \PDO('mysql:host='.$this->config['db']['host'].';dbname='.$this->config['db']['dbname'].';',$this->config['db']['username'],$this->config['db']['password']);	// 初始化一个PDO对象
 	}
 
 	// where 条件
@@ -68,7 +70,7 @@ class Model
 		if (!empty($arr)) {	$this->where($arr);}
 		$sql = 'select * from '.$this->table_name.$this->where;	// mysql语句
 		$list = $this->pdo->query($sql);			// 执行MySQL语句
-		$list->setFetchMode(PDO::FETCH_ASSOC);		// 设置获取结果集的返回值的类型-关联数组形式
+		$list->setFetchMode(\PDO::FETCH_ASSOC);		// 设置获取结果集的返回值的类型-关联数组形式
 		return $list->fetchAll();					// 提取结果集的内容	
 	}
 
@@ -79,13 +81,12 @@ class Model
 		}
 	
 		$stmt = $this->pdo->query('desc '.$this->table_name);
-		return self::$table_fields[$this->table_name] = $stmt->fetchAll(PDO::FETCH_COLUMN);
+		return self::$table_fields[$this->table_name] = $stmt->fetchAll(\PDO::FETCH_COLUMN);
 	}
 	
 	//过滤冗余字段
 	public function redun($data=[]){
 		$field = $this->field();
-		var_dump(self::$table_fields);exit;
 		foreach ($data as $k => $v) {
 			if (!in_array($k,$field)) {
 				unset($data[$k]);
